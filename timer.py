@@ -9,7 +9,7 @@ def sound():
     pygame.mixer.music.play()
 
 
-def start():
+def start(event=None):  # Мы добавляем event=None, чтобы функция могла работать с клавишей
     duration = int(seconds.get())
     while duration:
         m, s = divmod(int(duration), 60)
@@ -58,5 +58,8 @@ btn_stop = Button(root, text='Стоп', font='Arial 15 bold', command=stop)
 
 # Перетаскивание окна
 root.bind("<B1-Motion>", on_drag)
+
+# Привязываем событие нажатия клавиши Enter к функции start
+root.bind("<Return>", start)
 
 root.mainloop()
