@@ -1,13 +1,14 @@
+import os
 import time
 from tkinter import *
-import pygame
-
+from playsound import playsound  # Лёгкая библиотека для воспроизведения звука
+# import pygame
 
 def sound():
     btn_start.pack_forget()
     btn_stop.pack()
-    pygame.mixer.music.play()
-
+    playsound(file, block=False)  # Воспроизводим звук без блокировки интерфейса
+    # pygame.mixer.music.play()
 
 def start(event=None):  # Мы добавляем event=None, чтобы функция могла работать с клавишей
     duration = int(seconds.get())
@@ -27,18 +28,20 @@ def start(event=None):  # Мы добавляем event=None, чтобы фун�
 def stop():
     btn_start.pack()
     btn_stop.pack_forget()
-    pygame.mixer.music.pause()
-
+    # pygame.mixer.music.pause()
+    # `playsound` не имеет встроенной функции для паузы, но звук закончится автоматически.
 
 def on_drag(event):
     # Сдвигаем окно с тем, чтобы следить за положением мыши
     root.geometry(f'+{event.x_root}+{event.y_root}')
 
 
-file = 'blue-nile-vibraslap-188565.mp3'
-pygame.init()
-pygame.mixer.init()
-pygame.mixer.music.load(file)
+# file = '188565.mp3'
+file = os.path.join(os.path.dirname(__file__), '188565.mp3')
+
+# pygame.init()
+# pygame.mixer.init()
+# pygame.mixer.music.load(file)
 
 root = Tk()
 root.title('Таймер')
