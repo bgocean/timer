@@ -1,14 +1,15 @@
 import os
+import sys
 import time
 from tkinter import *
 from playsound import playsound  # Лёгкая библиотека для воспроизведения звука
-# import pygame
+
 
 def sound():
     btn_start.pack_forget()
     btn_stop.pack()
     playsound(file, block=False)  # Воспроизводим звук без блокировки интерфейса
-    # pygame.mixer.music.play()
+
 
 def start(event=None):  # Мы добавляем event=None, чтобы функция могла работать с клавишей
     duration = int(seconds.get())
@@ -28,25 +29,28 @@ def start(event=None):  # Мы добавляем event=None, чтобы фун�
 def stop():
     btn_start.pack()
     btn_stop.pack_forget()
-    # pygame.mixer.music.pause()
     # `playsound` не имеет встроенной функции для паузы, но звук закончится автоматически.
+
 
 def on_drag(event):
     # Сдвигаем окно с тем, чтобы следить за положением мыши
     root.geometry(f'+{event.x_root}+{event.y_root}')
 
 
-# file = '188565.mp3'
+# Путь к звуковому файлу
 file = os.path.join(os.path.dirname(__file__), '188565.mp3')
 
-# pygame.init()
-# pygame.mixer.init()
-# pygame.mixer.music.load(file)
+# Определение пути для иконки в зависимости от того, скомпилирован ли скрипт
+if getattr(sys, 'frozen', False):  # Если скрипт запущен из экзешника
+    icon_path = os.path.join(sys._MEIPASS, "Clock.ico")
+else:
+    icon_path = os.path.join(os.path.dirname(__file__), "Clock.ico")  # Если скрипт запущен как файл Python
 
 root = Tk()
 root.title('Таймер')
-root.geometry('150x150')
-root.resizable(0, 0)
+root.geometry('209x150')
+root.resizable(width=False, height=False)
+root.iconbitmap(icon_path)  # Используем переменную для пути к иконке
 
 count_digit = Label(root, text='0', font='Arial 15 bold')
 count_digit.pack()
